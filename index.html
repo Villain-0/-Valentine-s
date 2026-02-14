@@ -20,7 +20,7 @@
             display: flex; justify-content: center; align-items: center;
         }
 
-        /* Top Banner */
+        /* Top Banner - Fades in after click */
         #banner {
             position: absolute;
             top: 50px;
@@ -35,7 +35,7 @@
             text-shadow: 0 0 15px rgba(255, 46, 99, 0.8);
         }
 
-        /* Overlay to enable Local Audio */
+        /* Overlay to enable Audio */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9);
@@ -73,7 +73,7 @@
         .main-heart::before { top: -110px; left: 0; }
         .main-heart::after { left: 110px; top: 0; }
 
-        /* HORIZONTAL NAME */
+        /* HORIZONTAL NAME - Remains level even while heart beats */
         .name-overlay {
             position: absolute;
             color: white;
@@ -93,7 +93,7 @@
             100% { transform: rotate(-45deg) scale(1); }
         }
 
-        /* Floating Language Hearts */
+        /* Floating Language Hearts Animation */
         .floating-heart {
             position: absolute; color: rgba(255, 182, 193, 0.8);
             pointer-events: none; z-index: 1;
@@ -140,12 +140,28 @@
     </div>
 
     <script>
+        // Expanded language list
+        // Expanded and Corrected language list
         const names = [
-            { t: "காவியா" }, { t: "Kaviya" }, { t: "काविया" },
-            { t: "カヴィヤ" }, { t: "카비야" }, { t: "كافيا" }
+            { t: "காவியா" },       // Tamil
+            { t: "Kaviya" },       // English
+            { t: "काविया" },       // Hindi
+            { t: "కావియా" },       // Telugu
+            { t: "കാവിയ" },        // Malayalam
+            { t: "カヴィヤ" },     // Japanese
+            { t: "카비야" },       // Korean
+            { t: "كافيا" },        // Arabic
+            { t: "Кавия" },        // Russian
+            { t: "卡维亚" },       // Chinese
+            { t: "Kaviya" },       // French (uses Latin alphabet)
+            { t: "Kavia" },        // Spanish (phonetic variation)
+            { t: "Kavia" },        // Italian (phonetic variation)
+            { t: "คาเวีย" },       // Thai
+            { t: "קאביה" }         // Hebrew
         ];
 
-        setInterval(createFloatingHeart, 450);
+        // Start floating hearts immediately on load
+        setInterval(createFloatingHeart, 400);
 
         function createFloatingHeart() {
             const container = document.getElementById('heart-rain');
@@ -155,10 +171,10 @@
             
             heartEl.innerHTML = `<span style="font-size: 20px;">❤️</span><span style="font-size: 12px;">${randomName.t}</span>`;
             heartEl.style.left = Math.random() * 100 + "vw";
-            heartEl.style.animationDuration = (Math.random() * 4 + 5) + "s";
+            heartEl.style.animationDuration = (Math.random() * 3 + 4) + "s";
             
             container.appendChild(heartEl);
-            setTimeout(() => { heartEl.remove(); }, 9000);
+            setTimeout(() => { heartEl.remove(); }, 8000);
         }
 
         function startApp() {
@@ -166,13 +182,13 @@
             overlay.style.opacity = '0';
             setTimeout(() => { overlay.style.display = 'none'; }, 500);
             
-            // Show Banner
+            // Show the top banner
             document.getElementById('banner').style.opacity = '1';
             
             // Play Music
             const audio = document.getElementById('myAudio');
             audio.play().catch(error => {
-                console.log("Audio play failed. Check the file path!");
+                console.log("Audio play failed. Ensure the file 'Eppadi Vandhaayo.mp3' is in the same folder.");
             });
         }
     </script>
