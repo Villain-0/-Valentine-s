@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day Kaviya ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --heart-color: #ff2e63;
+            --bg-gradient: linear-gradient(135deg, #1a0a1a 0%, #4a0e2a 50%, #1a0a1a 100%);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background: var(--bg-gradient);
+            font-family: 'Poppins', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* Top Banner */
+        #banner {
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 35px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            z-index: 20;
+            text-shadow: 0 0 15px rgba(255, 46, 99, 0.8);
+        }
+
+        /* Overlay to enable Local Audio */
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            color: white; z-index: 100;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; text-align: center;
+            transition: opacity 0.5s ease;
+        }
+
+        /* The Main Beating Heart */
+        .heart-container {
+            position: relative; 
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-heart {
+            position: relative;
+            width: 220px; height: 220px;
+            background-color: var(--heart-color);
+            transform: rotate(-45deg);
+            animation: beat 0.8s infinite;
+            box-shadow: 0 0 50px rgba(255, 46, 99, 0.5);
+        }
+
+        .main-heart::before, .main-heart::after {
+            content: ""; position: absolute;
+            width: 220px; height: 220px;
+            background-color: var(--heart-color);
+            border-radius: 50%;
+        }
+
+        .main-heart::before { top: -110px; left: 0; }
+        .main-heart::after { left: 110px; top: 0; }
+
+        /* HORIZONTAL NAME */
+        .name-overlay {
+            position: absolute;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 48px;
+            white-space: nowrap;
+            z-index: 15;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+            pointer-events: none;
+        }
+
+        @keyframes beat {
+            0% { transform: rotate(-45deg) scale(1); }
+            15% { transform: rotate(-45deg) scale(1.15); }
+            30% { transform: rotate(-45deg) scale(1); }
+            45% { transform: rotate(-45deg) scale(1.15); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+
+        /* Floating Language Hearts */
+        .floating-heart {
+            position: absolute; color: rgba(255, 182, 193, 0.8);
+            pointer-events: none; z-index: 1;
+            display: flex; flex-direction: column; align-items: center;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        .footer {
+            position: absolute; bottom: 30px; width: 100%; text-align: center;
+            color: rgba(255, 255, 255, 0.6); font-size: 14px;
+            letter-spacing: 3px; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="banner">Happy Valentine's Day, Kaviya ❤️</div>
+
+    <div id="overlay" onclick="startApp()">
+        <h2 style="font-family: 'Dancing Script'; font-size: 45px;">For Kaviya ❤️</h2>
+        <p>Click to hear "Eppadi Vandhaayo"</p>
+    </div>
+
+    <audio id="myAudio" loop>
+        <source src="Eppadi Vandhaayo.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="heart-rain"></div>
+
+    <div class="heart-container">
+        <div class="main-heart"></div>
+        <div class="name-overlay">Kaviya</div>
+    </div>
+
+    <div class="footer">
+        With Love From <strong>Jeffrin</strong>
+    </div>
+
+    <script>
+        const names = [
+            { t: "காவியா" }, { t: "Kaviya" }, { t: "काविया" },
+            { t: "カヴィヤ" }, { t: "카비야" }, { t: "كافيا" }
+        ];
+
+        setInterval(createFloatingHeart, 450);
+
+        function createFloatingHeart() {
+            const container = document.getElementById('heart-rain');
+            const heartEl = document.createElement('div');
+            heartEl.className = 'floating-heart';
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            
+            heartEl.innerHTML = `<span style="font-size: 20px;">❤️</span><span style="font-size: 12px;">${randomName.t}</span>`;
+            heartEl.style.left = Math.random() * 100 + "vw";
+            heartEl.style.animationDuration = (Math.random() * 4 + 5) + "s";
+            
+            container.appendChild(heartEl);
+            setTimeout(() => { heartEl.remove(); }, 9000);
+        }
+
+        function startApp() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
+            
+            // Show Banner
+            document.getElementById('banner').style.opacity = '1';
+            
+            // Play Music
+            const audio = document.getElementById('myAudio');
+            audio.play().catch(error => {
+                console.log("Audio play failed. Check the file path!");
+            });
+        }
+    </script>
+</body>
+</html>
